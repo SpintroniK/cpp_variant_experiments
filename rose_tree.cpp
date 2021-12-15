@@ -16,7 +16,7 @@ public:
 template<typename T>
 struct rose_tree: std::variant<T, std::vector<rose_tree<T>>> 
 {
-    using base = typename rose_tree::variant;
+    using base = typename rose_tree::variant; // See https://stackoverflow.com/a/63617380/3427069
 
     template<typename U>
     rose_tree(U&& v): std::variant<T, std::vector<rose_tree<T>>>{std::forward<U>(v)} 
@@ -35,7 +35,7 @@ auto reduce_tree(const rose_tree<T>& t, TInit i, FBranch r_op, FLeaf t_op)
             return std::transform_reduce(std::begin(branch), std::end(branch), i, r_op, [&] (const auto& t) { return reduce_tree(t, i, r_op, t_op); });
         }
     }, 
-    static_cast<rose_tree<T>::base>(t));
+    static_cast<rose_tree<T>::base>(t)); // See SO link above
 }
 
 auto total_length(const rose_tree<std::string_view>& t) -> int
