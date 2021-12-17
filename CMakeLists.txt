@@ -5,5 +5,5 @@ project(Cpp_Variant_Experiments)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(rose_tree rose_tree.cpp)
-add_executable(variant_tree variant_tree.cpp)
+add_executable(simplified_rose_tree simplified_rose_tree.cpp)
+add_executable(simplified_variant_tree simplified_variant_tree.cpp)
