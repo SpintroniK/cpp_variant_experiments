@@ -30,8 +30,8 @@ struct Tree : std::variant<nil, std::pair<std::shared_ptr<T>, std::vector<Tree<T
     }
 };
 
-template <typename T, typename TInit, typename FTransform, typename FReduce>
-auto transform_reduce(const Tree<T>& t, TInit init, FTransform t_op, FReduce r_op)
+template <typename T, typename TInit, typename FReduce, typename FTransform>
+auto transform_reduce(const Tree<T>& t, TInit init, FReduce r_op, FTransform t_op)
 {
     return std::visit(overloaded
     {
@@ -43,7 +43,7 @@ auto transform_reduce(const Tree<T>& t, TInit init, FTransform t_op, FReduce r_o
         {
             return r_op(t_op(*(p.first)), std::accumulate(p.second.begin(), p.second.end(), init, [&] (const auto& a, const auto& b)
             {
-                return r_op(a, transform_reduce(b, init, t_op, r_op));
+                return r_op(a, transform_reduce(b, init, r_op, t_op));
             }));
         }
     }, 
@@ -67,9 +67,10 @@ int main(int, char**)
     auto c = MakeNode("[Node c]"s, { b, a });
 
     using node_type = decltype(c)::value_type;
-    const auto r = transform_reduce(c, std::size(node_type{}), 
-                                    [](const auto& v) { return std::size(v); }, // Transform function
-                                    [](auto i, auto j) { return i + j; } );     // Reduce function
+    const auto r = transform_reduce(c, std::size(node_type{}),
+                                    [](auto i, auto j) { return i + j; },       // Reduce function
+                                    [](const auto& v) { return std::size(v); } // Transform function
+                                    );    
 
     std::cout << "Total = " << r << std::endl;
 

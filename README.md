@@ -24,6 +24,6 @@ Compiler explorer link: [https://godbolt.org/z/bv51GvccM](https://godbolt.org/z/
 
 This one uses `shared_ptr` to overcome the need for pair to be declared with complete types. It allows only one type of node.
 Works with GCC >= 10.
+
 The C++ for that experiment is `shared_ptr_rose_tree.cpp`.
-Compiler explorer link: 
-[https://godbolt.org/z/hssKGf5Pq](https://godbolt.org/z/hssKGf5Pq).
+Compiler explorer link: [https://godbolt.org/z/hssKGf5Pq](https://godbolt.org/z/hssKGf5Pq).
