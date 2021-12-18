@@ -7,3 +7,4 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(simplified_rose_tree simplified_rose_tree.cpp)
 add_executable(simplified_variant_tree simplified_variant_tree.cpp)
+add_executable(shared_ptr_rose_tree shared_ptr_rose_tree.cpp)
