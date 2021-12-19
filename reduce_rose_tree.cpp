@@ -47,7 +47,6 @@ auto reduce_tree(const Tree<T...>& t, TInit init, FReduce r_op, FTransform t_op)
 }
 
 using Node = Tree<std::string, int>;
-using VariantType = std::variant<std::string, int>;
 
 template <typename T>
 Node MakeNode(const T& n, const std::vector<Node>& c = { nil{} })
