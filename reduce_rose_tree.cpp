@@ -28,23 +28,25 @@ struct Tree : std::variant<nil, std::pair<std::variant<T...>, std::vector<Tree<T
     }
 };
 
-template <typename... T, typename TInit, typename FReduce, typename FTransform>
-auto reduce_tree(const Tree<T...>& t, TInit init, FReduce r_op, FTransform t_op)
+template <typename... T, typename TInit, typename BinaryReductionOp, typename UnaryTransformOp>
+auto reduce_tree(const Tree<T...>& t, TInit init, BinaryReductionOp reduce, UnaryTransformOp transform)
 {
     return std::visit(overloaded
     {
         [&] (nil) { return init; },
         [&] (const auto& p)
         {
-            return r_op(std::visit(t_op , p.first), 
-                        std::transform_reduce(std::begin(p.second), std::end(p.second), init, r_op, [&] (const auto& t) 
-                        { 
-                            return reduce_tree(t, init, r_op, t_op); 
-                        }));
+            return reduce(std::visit(transform , p.first), 
+                          std::transform_reduce(std::begin(p.second), std::end(p.second), init, reduce, [&] (const auto& branch) 
+                          { 
+                            return reduce_tree(branch, init, reduce, transform); 
+                          }));
         }
     }, 
     static_cast<Tree<T...>::base>(t));
 }
+
+// Generic stuff above
 
 using Node = Tree<std::string, int>;
 
