@@ -66,3 +66,13 @@ Source code: `reduce_rose_tree.cpp`.
 
 As always, the code has been tested with GCC >= 10.
 And here's the compiler explorer link: [https://godbolt.org/z/1qhjWx33P](https://godbolt.org/z/1qhjWx33P).
+
+## Transform & Reduce a Rose Tree (2)
+
+A simplified version of the previous one, it also builds with clang >= 10 and gcc >= 10.
+The main difference with the previous code is that a tree is just a std::pair of a variant and a vector of trees.
+This greatly simplifies the code.
+
+Source code: `reduce_rose_tree2.cpp`.
+
+Compiler explorer link: [https://godbolt.org/z/a3ve83E3d](https://godbolt.org/z/a3ve83E3d).
